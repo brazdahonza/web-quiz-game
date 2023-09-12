@@ -1,4 +1,5 @@
 package com.example.engine.exception
 
-class CustomErrorMessafe {
-}
+class CustomErrorMessage(
+    val error: String? = null
+)

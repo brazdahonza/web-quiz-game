@@ -1,4 +1,4 @@
-package engine.dto
+package com.example.engine.dto
 
 class CreatedQuestionResponse(
     val id: Int,

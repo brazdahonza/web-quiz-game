@@ -1,4 +1,4 @@
 package com.example.engine.exception
 
-class QuestionNotFoundExeption {
+class QuestionNotFoundException(message: String) : RuntimeException(message) {
 }

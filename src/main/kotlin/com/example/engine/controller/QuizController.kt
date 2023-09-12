@@ -1,30 +1,27 @@
-package engine.controller
+package com.example.engine.controller
 
-import engine.dto.AnsweredQuestionResponse
-import engine.dto.CreateQuestionRequestDto
-import engine.dto.CreatedQuestionResponse
-import engine.model.Question
-import engine.model.Quiz
-import org.springframework.beans.factory.annotation.Autowired
+import com.example.engine.dto.AnsweredQuestionResponse
+import com.example.engine.dto.CreateQuestionRequestDto
+import com.example.engine.dto.CreatedQuestionResponse
+import com.example.engine.exception.QuestionNotFoundException
+import com.example.engine.model.Question
+import com.example.engine.model.Quiz
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/quizzes")
+@RequestMapping("/api")
 class QuizController(var quiz: Quiz) {
 
-//    @GetMapping("/quiz")
-//    fun getQuizQuestion(): MutableList<Question> {
-//        return quiz.questions
-//    }
-//
-//    @PostMapping("/quiz")
-//    fun answerQuestion(@RequestParam answer: String): AnsweredQuestionResponse {
-//        return AnsweredQuestionResponse(true, "pepa")
-//    }
+    @GetMapping("/quizzes/{id}")
+    fun answerQuestion(@PathVariable id: Int): Question {
+        return quiz.questions.find { it.id == id }
+            ?: throw QuestionNotFoundException("Question with this id does not exist")
+    }
 
-    @PostMapping
+    @PostMapping("/quizzes")
     fun addQuestion(@RequestBody question: CreateQuestionRequestDto): CreatedQuestionResponse {
-        val createdQuestion = Question(question.title, question.text, question.options, question.correctAnswer)
+        val createdQuestion = Question(question.title, question.text, question.options, question.answer)
+        println(question.answer)
         quiz.questions.add(createdQuestion)
         return CreatedQuestionResponse(
             createdQuestion.id,
@@ -34,4 +31,20 @@ class QuizController(var quiz: Quiz) {
         )
     }
 
+    @GetMapping("/quizzes")
+    fun showAllQuestions(): MutableList<Question> {
+        return quiz.questions
+    }
+
+    @PostMapping("/quizzes/{id}/solve")
+    fun solveQuestion(@PathVariable id: Int, @RequestParam answer: Int): AnsweredQuestionResponse {
+        quiz.questions.forEach { question: Question -> println(question.correctAnswer) }
+        val question = quiz.questions.find { it.id == id }
+            ?: throw QuestionNotFoundException("Question with this id does not exist")
+        return if(question.correctAnswer == answer) {
+            AnsweredQuestionResponse(true, "Congratulations, you're right!")
+        } else {
+            AnsweredQuestionResponse(false, "Wrong answer! Please, try again.")
+        }
+    }
 }

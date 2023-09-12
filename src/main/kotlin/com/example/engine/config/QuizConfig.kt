@@ -1,7 +1,7 @@
-package engine.config
+package com.example.engine.config
 
 
-import engine.model.Quiz
+import com.example.engine.model.Quiz
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
