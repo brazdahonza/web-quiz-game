@@ -25,6 +25,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.hibernate.validator:hibernate-validator:6.2.0.Final")
+    implementation("javax.validation:validation-api:2.0.1.Final")
 }
 
 tasks.withType<KotlinCompile> {

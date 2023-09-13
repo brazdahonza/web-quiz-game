@@ -10,7 +10,7 @@ class Question(
     val text: String,
     val options: MutableList<String>,
     @JsonIgnore
-    val correctAnswer: Int
+    val correctAnswer: MutableList<Int>
 ) {
     val id: Int = createId()
 
