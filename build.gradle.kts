@@ -23,10 +23,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web-services")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    implementation("org.hibernate.validator:hibernate-validator:6.2.0.Final")
-    implementation("javax.validation:validation-api:2.0.1.Final")
+    runtimeOnly ("com.h2database:h2")
+    implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
 }
 
 tasks.withType<KotlinCompile> {
